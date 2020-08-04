@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+<h1>JavaScript Básico</h1>
+
+<script>
+
+    /* 
+        'use strict' proíbe:
+            a) declaração de variáveis/constantes sem um comando explícito de declaração
+            b) funções com parâmetros duplicados
+            c) o comando with()
+            d) modifica o comportamento da palavra-chave "this"
+    */
+    'use strict';
+
+    // variáveis com "var" só possuem dois escopos: local (quando dentro de uma função) ou global (qualquer outro contexto)
+    var a = 888;
+    console.log(a); // 888
+
+    if (true) {
+        var b = a;
+    }
+
+    console.log('O valor de b é:', b); // 888
+
+    function teste() {
+        var c = a;
+        console.log('Valor de c dentro da função:', c); // Ok
+    }
+    teste();
+
+    // console.log('O valor de c é:', c); // ReferenceError: c não existe fora da função
+
+    // ES6: let e const
+    let c = 999;
+    if (true) {
+        let d = c; // OK
+        console.log('Valor de d dentro do if:', d); // Ok
+    }
+
+    // console.log('O valor de d é:', d); // ReferenceError
+
+    // constantes: são valores que uma vez declarados não podem ser reatribuídos
+    const x = 10;
+    // x = 12; // TypeError
+    const listaAnimais = ['Gato', 'Cachorro', 'Rato'];
+    console.log(listaAnimais);
+    listaAnimais.push('Papagaio'); // adiciona um item no final da lista [Gato, Cachorro, Rato, Papagaio]
+    listaAnimais.shift(); // remove o primeiro item da lista [Cachorro, Rato, Papagaio]
+    listaAnimais[1] = 'Raposa'; // [Cachorro, Raposa, Papagaio]
+    console.log(listaAnimais);
+    // listaAnimais = []; // TypeError: não se pode atribuir um novo valor à uma constante
+
+    // Objetos
+    const pessoa = {
+        // propriedades
+        nome: "Henrique",
+        sobrenome: "Souza",
+        idade: 25,
+        email: "h.souza@gmail.com",
+
+        // métodos ES5 ou anteriores
+        dizerOla: function() {
+            alert('Olá como vai você?')
+        },
+
+        // métodos ES6+
+        dizerTchau() {
+            alert('Até mais!!!');
+        }
+    }
+
+    console.log(pessoa.nome); // Henrique
+    pessoa.nome = "Paulo"; // OK alteração de valores de propriedades
+    pessoa.cidade = "Barueri";// Ok criação de propriedades dinâmicas
+    pessoa.dizerOla(); // exibe o alerta
+    pessoa.dizerTchau();
+    console.log(pessoa);
+
+    pessoa = {} // TypeError: reatribuição não é permitida
+
+
+</script>

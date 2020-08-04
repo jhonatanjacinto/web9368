@@ -1,0 +1,14 @@
+BOM = Browser Object Model
+    É o objeto que representa todos os recursos relacionados à Janela do navegador
+    É representado pelo objeto "window"
+
+    Ex: pop-ups, geolocalização, web storage, acesso ao sistema de arquivos, cookies, notificações, etc.
+
+    WINDOW é o objeto que representa o contexto global das aplicações de FRONT-END
+
+
+DOM = Document Object Model
+    É o objeto que representa toda a estrutura HTML carregada pelo navegador
+    É representado pelo objeto "document"
+
+    Toda a manipulação da página HTML é feita através de elementos criados por esse objeto

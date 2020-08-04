@@ -1,0 +1,61 @@
+<meta charset="utf-8">
+<h1>JavaScript: querySelector e querySelectorAll</h1>
+<style>
+    p {
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        padding: 15px;
+    }
+    .vermelho {
+        background-color: #fff0f0;
+        border-color: red;
+        color: red;
+    }
+</style>
+
+<p>Parágrafo 1</p>
+<p class="vermelho">Parágrafo 2</p>
+<p>Parágrafo 3</p>
+<p>Parágrafo 4</p>
+<p class="vermelho">Parágrafo 5</p>
+<p class="vermelho">Parágrafo 6</p>
+<span class="vermelho">Meu span vermelho</span>
+<p>Parágrafo 7</p>
+<p>Parágrafo 8</p>
+<p>Parágrafo 9</p>
+<p id="p10">Parágrafo 10</p>
+
+<script>
+
+    // querySeletor(seletor): procura e retorna o primeiro elemento HTML que atender ao seletor especificado
+    // querySelectorAll(seletor): procura e retorna uma lista de elementos HTML que atendem ao seletor especificado
+    const p10 = document.querySelector('#p10');
+    p10.innerHTML = "<b>Alterado pelo JavaScript...</b>";
+    p10.style.color = 'green';
+    p10.style.fontStyle = 'italic';
+
+    const vermelhos = document.querySelectorAll('.vermelho');
+    console.log(vermelhos);
+
+    // Exemplo 1: percorrendo a lista com for
+    for (let i = 0; i < vermelhos.length; i++)
+    {
+        vermelhos[i].textContent = "Vermelhos alterados pelo JS...";
+    }
+
+    // Exemplo 2: for...of (looping especializado para objetos iteráveis: Arrays, String, Map, Set, etc.)
+    for (let elemento of vermelhos) 
+    {
+        elemento.textContent = "Vermelhos alterados com for...of";
+    }
+
+    // Exemplo 3: forEach() high-order function especializada em percorrer arrays
+    vermelhos.forEach(function(elemento, indice) {
+        elemento.textContent = indice + " - Vermelhos alterados com o forEach do JS";
+    });
+
+    // ES6: Arrow Function
+    vermelhos.forEach(elemento => elemento.textContent = "Vermelhos alterados com o forEach + Arrow Function");
+
+
+</script>
