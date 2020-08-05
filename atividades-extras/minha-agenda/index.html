@@ -60,6 +60,44 @@
     <script>
 
         // Insira sua lógica aqui
+        let formulario = document.querySelector('#formCadastro');
+        let tabela = document.querySelector('#tabelaContatos');
+
+        tabela.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-danger')) {
+                // o botão de exclusão foi clicado, então removemos a linha
+                event.target.closest('tr').remove();
+            }
+        });
+
+        formulario.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let inputNome = document.querySelector('#inputNome');
+            let inputTelefone = document.querySelector('#inputTelefone');
+
+            if (inputNome.value.trim() == '') {
+                alert(inputNome.dataset.msg);
+            }
+            else if (inputTelefone.value.trim() == '') {
+                alert(inputTelefone.dataset.msg);
+            }
+            else {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${inputNome.value}</td>
+                    <td>${inputTelefone.value}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm">
+                            Excluir
+                        </button>
+                    </td>
+                `;
+                tabela.append(tr);
+                // inputNome.value = '';
+                // inputTelefone.value = '';
+                formulario.reset();
+            }
+        });
 
     </script>
 </body>
