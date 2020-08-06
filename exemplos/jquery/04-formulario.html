@@ -1,0 +1,110 @@
+<meta charset="utf-8">
+<h1>jQuery: formulário</h1>
+<style>
+    .msg {
+        padding: 15px 25px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: #f2f2f2;
+    }
+    .msg-erro, 
+    .destacar {
+        border-color: #db2323;
+        color: #db2323;
+        background-color: #fff0f0;
+    }
+    .msg-sucesso {
+        border-color: #30cf6c;
+        color: #30cf6c;
+        background-color: #e3ffee;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    form {
+        width: 400px;
+        margin-top: 20px;
+    }
+    body {
+        padding: 60px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    input {
+        width: 100%;
+        border: 1px solid #ccc;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+    button {
+        border-radius: 5px;
+        border: none;
+        background: green;
+        color: #fff;
+        padding: 15px 35px;
+    }
+    .escondida {
+        display: none;
+    }
+</style>
+
+<form id="form1" action="">
+    <label for="">
+        * Nome:
+        <br>
+        <!-- data-* = dataset -->
+        <input type="text" data-mensagem="Nome é obrigatório!" class="obrigatorio">
+    </label>
+    <label for="">
+        * E-mail: 
+        <br>
+        <input type="text" data-mensagem="E-mail é obrigatório" class="obrigatorio">
+    </label>
+    <label for="">
+        Telefone:
+        <br>
+        <input type="text" data-mensagem="Telefone é obrigatorio!" class="">
+    </label>
+    <button>Enviar</button>
+</form>
+
+<script src="jquery.min.js"></script>
+<script>
+
+    // criamos uma div em memória usando jQuery
+    const divMsg = $('<div class="msg msg-sucesso"></div>');
+
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+        const mensagensErro = [];
+
+        $('.obrigatorio', this).each(function(index, campo) {
+            if ($(campo).val().trim() == '') {
+                $(campo).addClass('destacar');
+                let mensagem = $(campo).data('mensagem');
+                mensagensErro.push(mensagem);
+            }
+            else {
+                $(campo).removeClass('destacar');
+            }
+        });
+
+        if (mensagensErro.length > 0) {
+            // exibe os erros coletados
+            divMsg.html(`
+                <strong>Atenção!</strong><br>
+                ${mensagensErro.join('<br>')}
+            `).addClass('msg-erro').removeClass('msg-sucesso');
+        }
+        else {
+            // exibimos uma mensagem de sucesso
+            divMsg.text('Cadastro realizado com sucesso!').addClass('msg-sucesso').removeClass('msg-erro');
+        }
+
+        // $(this).prepend(divMsg); // coloca a divMsg como primeiro filho do formulário
+        // $(this).append(divMsg); // coloca a divMsg como último filho do formulário
+        $(this).before(divMsg); // coloca a divMsg antes do formulário
+        // $(this).after(divMsg); // coloca a divMsg depois do formulário
+    });
+
+</script>
