@@ -8,8 +8,9 @@
             "Preencha o formulário para criar cartões"
         ];
 
-        for (let mensagem of listaMensagens) {
-            alert(mensagem);
+        for (let mensagem of listaMensagens) 
+        {
+            moduloMural.adicionarCartao(mensagem);
         }
     });
 

@@ -1,11 +1,35 @@
 const moduloMural = (function() {
 
     let mural = document.querySelector('.mural');
+    let templateCartao = document.querySelector('#templateCartao').innerHTML;
 
     // exclusão de cartões
     mural.addEventListener('click', function(event) {
         if (event.target.classList.contains('opcoesDoCartao-remove')) {
-            event.target.closest('.cartao').remove();
+            const cartao = event.target.closest('.cartao');
+            cartao.classList.add('cartao--some');
+            cartao.addEventListener('transitionend', function() {
+                cartao.remove();
+            });
+        }
+    });
+
+    // mudando a cor do cartão
+    mural.addEventListener('change', function(event) {
+        if (event.target.type === 'radio') {
+            const radio = event.target;
+            const cartao = radio.closest('.cartao');
+            cartao.style.backgroundColor = radio.value;
+        }
+    });
+
+    // mudando a cor do cartão via teclado
+    mural.addEventListener('keypress', function(event) {
+        if (
+            event.target.tagName === 'LABEL' &&
+            (event.key == 'Enter' || event.key == ' ')
+        ) {
+            event.target.click();
         }
     });
 
@@ -14,10 +38,22 @@ const moduloMural = (function() {
         mural.classList.toggle('mural--linha');
     }
 
+    let numeroCartao = 0;
+    function adicionarCartao(conteudo)
+    {
+        numeroCartao++;
+        const cartao = document.createElement('article');
+        cartao.classList.add('cartao');
+        cartao.tabIndex = 0;
+        cartao.innerHTML = templateCartao.replace(/{{NUMERO_CARTAO}}/g, numeroCartao).replace(/{{CONTEUDO_CARTAO}}/g, conteudo);
+        mural.append(cartao);
+    }
+
     // retorna um objeto com tudo aquilo que deve
     // ser acessível (público) nesse módulo
     return {
-        mudarLayout
+        mudarLayout,
+        adicionarCartao
     }
 
 })();
