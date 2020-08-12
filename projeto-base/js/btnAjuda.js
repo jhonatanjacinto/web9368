@@ -1,16 +1,16 @@
 (function() {
 
     let btn = document.querySelector('#btnAjuda');
-    btn.addEventListener('click', function() {
-        const listaMensagens = [
-            "Bem-vindo ao CEPP!",
-            "Clique no botão 'Linhas' para mudar o layout",
-            "Preencha o formulário para criar cartões"
-        ];
+    btn.addEventListener('click', async function() {
+        // https://ceep.herokuapp.com/cartoes/instrucoes.
+        const respostaServidor = await fetch('https://ceep.herokuapp.com/cartoes/instrucoes');
+        const dadosCarregados = await respostaServidor.json();
+        console.log(dadosCarregados);
 
+        const listaMensagens = dadosCarregados.instrucoes;
         for (let mensagem of listaMensagens) 
         {
-            moduloMural.adicionarCartao(mensagem);
+            moduloMural.adicionarCartao(mensagem.conteudo, mensagem.cor);
         }
     });
 

@@ -39,10 +39,11 @@ const moduloMural = (function() {
     }
 
     let numeroCartao = 0;
-    function adicionarCartao(conteudo)
+    function adicionarCartao(conteudo, cor = '')
     {
         numeroCartao++;
         const cartao = document.createElement('article');
+        cartao.style.backgroundColor = cor;
         cartao.classList.add('cartao');
         cartao.tabIndex = 0;
         cartao.innerHTML = templateCartao.replace(/{{NUMERO_CARTAO}}/g, numeroCartao).replace(/{{CONTEUDO_CARTAO}}/g, conteudo);

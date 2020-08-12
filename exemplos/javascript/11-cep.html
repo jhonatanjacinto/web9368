@@ -1,0 +1,49 @@
+<meta charset="utf-8">
+<h1>Carregar dados do CEP digitado</h1>
+<b>CEP:</b><br>
+<input type="text" id="campoCep" maxlength="8">
+<button id="btnBuscar">
+    Buscar
+</button>
+<div id="conteudoEndereco">
+    <!-- Mostrar dados do endereço dentro dessa DIV -->
+</div>
+<hr>
+<iframe width="700" height="450" style="border: none;" src="" id="mapa"></iframe>
+
+<script>
+
+    // guardar as referências do HTML
+    const inputCep = document.querySelector('#campoCep');
+    const btnBuscar = document.querySelector('#btnBuscar');
+    const divEndereco = document.querySelector('#conteudoEndereco');
+    const iframeMapa = document.querySelector('#mapa');
+
+    btnBuscar.addEventListener('click', async function() {
+        let cep = inputCep.value.trim();
+
+        if (isNaN(cep) || cep.length != 8) {
+            alert('Por favor, digite um cep válido!');
+            inputCep.focus();
+        }
+        else {
+            // buscar as informações do cep na API
+            // https://viacep.com.br/ws/CEP_DIGITADO_PELO_USUARIO/json
+            const respostaServidor = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+            const infoEndereco = await respostaServidor.json();
+            console.log('infoEndereco: ', infoEndereco);
+
+            // desestruturação de objeto
+            let { logradouro, bairro, uf, localidade } = infoEndereco;
+
+            divEndereco.textContent = `
+                ${logradouro}, ${bairro} - ${localidade} / ${uf}
+            `;
+
+            let url = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHU25u6912rHIn4Kv4Rh77pk8a5mUjFo';
+            let parametros = `&q=${logradouro},${bairro},${localidade}`;
+            iframeMapa.src = url + parametros;
+        }
+    });
+
+</script>
