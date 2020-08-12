@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<h1>Ajax com JavaScript (ES5)</h1>
+<h1>Ajax com API Fetch (ES6)</h1>
 <button id="btnCarregar">
     Carregar Dados
 </button>
@@ -22,20 +22,16 @@
     });
 
     btnCarregar.addEventListener('click', function() {
-        const ajax = new XMLHttpRequest();
-        ajax.open('GET', 'https://jhonatanjacinto.dev');
-        ajax.send();
-
-        ajax.addEventListener('load', function() {
-            divMostrador.innerHTML = ajax.responseText;
-        });
-
-        ajax.addEventListener('error', function(erro) {
-            alert('Deu ruim!!!');
+        fetch('https://jhonatanjacinto.dev').then(function(respostaServidor) {
+            return respostaServidor.text();
+        })
+        .then(function(textoHtmlCarregado) {
+            divMostrador.innerHTML = textoHtmlCarregado;
+        })
+        .catch(function(erro) {
+            alert('Deu ruim!');
             console.error(erro);
         });
-
-        console.log('Essa mensagem será exibida na hora...');
     });
 
 </script>

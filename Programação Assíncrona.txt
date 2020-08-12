@@ -1,0 +1,68 @@
+- Clique no botão que realiza as operações
+    - Acessar o banco de dados da aplicação
+        - Acesso as poltronas disponíveis
+            - Realizar a Reserva da Poltrona
+                - Realizar o Pagamento (Se der certo)
+                    - Sucesso! Sua reserva está feita
+
+// CALLBACK HELL
+btn.addEventListener('click', function() {
+    let conexao = conectarNoBanco();
+    conexao.addEventListener('connected', function() {
+        let poltronasDisponiveis = conexao.getTable('poltronas');
+        poltronasDisponiveis.addEventListener('loaded', function() {
+            let registrado = conexao.registrarPoltrona(55);
+            registrado.addEventListener('registered', function() {
+                let pagamento = realizarPagamentoCielo();
+                pagamento.addEventListener('paid', function() {
+                    alert('sucesso, sua poltrona foi registrada!');
+                })
+            })
+        })
+    })
+    conexao.addEventListener('error', function() {
+        // tratar o erro da conexão
+    })
+})
+
+// PROMISES
+btn.addEventListener('click', function() {
+    let conexao = conectarNoBanco();
+    conexao.then(function() {
+        let poltronasDisponiveis = conexao.getTable('poltronas');
+        return poltronasDisponiveis;
+    })
+    .then(function() {
+        let registrado = conexao.registrarPoltrona(55);
+        return registrado;
+    })
+    .then(function() {
+        let pagamento = realizarPagamentoCielo();
+        return pagamento;
+    })
+    .then(function() {
+        alert('sucesso, sua poltrona foi registrada!');
+    })
+    .catch(function(erro) {
+        alert(erro);
+    });
+});
+
+// ES7 = async/await 
+1) Async/await sempre estão juntos (pelo menos até sair a versão final do ES2020)
+2) Async sempre é utilizado numa função (ou seja, só podemos ter funções async)
+3) Await só aparece junto com objetos PROMISE 
+
+btn.addEventListener('click', async function() {
+    try 
+    {
+        let conexao = await conectarNoBanco();
+        await conexao.getTable('poltronas');
+        await conexao.registrarPoltrona(55);
+        await realizarPagamentoCielo();
+        alert('sucesso, sua poltrona foi registrada!');
+    }
+    catch(erro) {
+        alert(erro);
+    }
+});

@@ -1,0 +1,43 @@
+<meta charset="utf-8">
+<h1>Ajax com API Fetch + Async/Await (ES7)</h1>
+<button id="btnCarregar">
+    Carregar Dados
+</button>
+<button id="btnTeste">
+    Mostrar Alerta
+</button>
+<br>
+<div id="mostradorDados">
+    Os dados carregados serão mostrados aqui...
+</div>
+
+<script>
+
+    let btnCarregar = document.querySelector('#btnCarregar');
+    let divMostrador = document.querySelector('#mostradorDados');
+    let btnTeste = document.querySelector('#btnTeste');
+
+    btnTeste.addEventListener('click', function() {
+        alert('Teste de alerta...');
+    });
+
+    btnCarregar.addEventListener('click', async function() {
+        try 
+        {
+            btnCarregar.textContent = 'Carregando...';
+            btnCarregar.disabled = true;
+            const respostaServidor = await fetch('https://jhonatanjacinto.dev');
+            let textoHtmlCarregado = await respostaServidor.text();
+            divMostrador.innerHTML = textoHtmlCarregado;
+        }
+        catch(erro) {
+            alert('Deu ruim!');
+            console.error(erro);
+        }
+        finally {
+            btnCarregar.disabled = false;
+            btnCarregar.textContent = 'Carregar Dados';
+        }
+    });
+
+</script>
