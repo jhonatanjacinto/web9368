@@ -50,6 +50,88 @@
 <script>
 
     // Insira a lógica necessária aqui
+    const tbody = document.querySelector('tbody');
+    const ulComentarios = document.querySelector('.comentarios');
+    const paginador = document.querySelector('#paginador');
+    const seletorQuantidade = document.querySelector('#quantidade');
 
+    paginador.addEventListener('change', function() {
+        let pagina = paginador.value;
+        carregarPosts(pagina);
+    });
+
+    seletorQuantidade.addEventListener('change', function() {
+        let totalDePaginas = Math.ceil(100 / seletorQuantidade.value);
+        paginador.innerHTML = '';
+
+        for (let i = 1; i <= totalDePaginas; i++)
+        {
+            const opcao = document.createElement('option');
+            opcao.value = i;
+            opcao.textContent = i;
+            paginador.append(opcao);
+        }
+
+        carregarPosts();
+    });
+
+    carregarPosts();
+    async function carregarPosts(pagina = 1) 
+    {
+        tbody.innerHTML = 'Carregando...';
+        let quantidade = seletorQuantidade.value;
+        let start = (pagina - 1) * quantidade;
+        const respostaServidor = await fetch(`https://jsonplaceholder.typicode.com/posts?_start=${start}&_limit=${quantidade}`);
+        const listaDePosts = await respostaServidor.json();
+
+        tbody.innerHTML = '';
+        for (let post of listaDePosts)
+        {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${post.id}</td>
+                <td>${post.title}</td>
+                <td>
+                    <button data-postid="${post.id}" class="btn-ver btn btn-primary">
+                        Ver comentários
+                    </button>
+                </td>
+            `;
+            tbody.append(tr);
+        }
+    }
+
+    tbody.addEventListener('click', async function(event) {
+        // se o botão de ver comentários foi clicado na tabela...
+        if (event.target.classList.contains('btn-ver')) 
+        {
+            ulComentarios.innerHTML = '';
+            const botaoClicado = event.target;
+            botaoClicado.disabled = true;
+            botaoClicado.textContent = 'Carregando...';
+
+            let idPost = botaoClicado.dataset.postid;
+            const respostaServidor = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${idPost}`);
+            const listaDeComentarios = await respostaServidor.json();
+            console.log('listaDeComentarios:', listaDeComentarios);
+
+            for (let comentario of listaDeComentarios)
+            {
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'mb-3');
+                li.innerHTML = `
+                    <em>${comentario.email.toLowerCase()}</em> comentou:
+                    <hr>
+                    <strong>${comentario.name.toUpperCase()}</strong><br>
+                    ${comentario.body}
+                `;
+                ulComentarios.append(li);
+            }
+
+            botaoClicado.textContent = 'Ver comentários';
+            botaoClicado.disabled = false;
+            ulComentarios.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 
 </script>
