@@ -50,11 +50,26 @@ const moduloMural = (function() {
         mural.append(cartao);
     }
 
+    function getCartoes()
+    {
+        const cartoes = mural.querySelectorAll('.cartao');
+        console.log(cartoes); // NodeList de Articles
+        const listaDeCartoes = Array.from(cartoes).map(function(cartao) {
+            return {
+                conteudo: cartao.querySelector('.cartao-conteudo').textContent,
+                cor: cartao.style.backgroundColor
+            }
+        });
+        console.log(listaDeCartoes); // Array de Objetos
+        return listaDeCartoes;
+    }
+
     // retorna um objeto com tudo aquilo que deve
     // ser acessível (público) nesse módulo
     return {
         mudarLayout,
-        adicionarCartao
+        adicionarCartao,
+        getCartoes
     }
 
 })();
