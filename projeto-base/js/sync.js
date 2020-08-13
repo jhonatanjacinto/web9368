@@ -1,4 +1,4 @@
-(function() {
+const moduloSync = (function() {
 
     // requisição Ajax GET com jQuery
     $.get('https://ceep.herokuapp.com/cartoes/carregar', { usuario: 'jhonatan.jacinto@caelum.com.br' }, function(dados) {
@@ -49,5 +49,11 @@
             btnSync.disabled = false;
         }
     });
+
+    return {
+        sincronizar() {
+            btnSync.click();
+        }
+    }
 
 })();

@@ -12,6 +12,7 @@
             // o campo foi preenchido, então criamos um novo cartão no mural
             let conteudo = campoTexto.value;
             moduloMural.adicionarCartao(conteudo);
+            moduloSync.sincronizar();
             formulario.reset();
         }
     });

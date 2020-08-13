@@ -10,6 +10,7 @@ const moduloMural = (function() {
             cartao.classList.add('cartao--some');
             cartao.addEventListener('transitionend', function() {
                 cartao.remove();
+                moduloSync.sincronizar();
             });
         }
     });
