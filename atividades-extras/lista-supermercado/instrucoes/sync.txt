@@ -12,7 +12,7 @@ Parte 2: SALVAMENTO DE DADOS NO SERVIDOR
 
     const parametros = new URLSearchParams();
     parametros.append('usuario', '[SEU USUARIO]');
-    parametros.append('itens', JSON.stringify(lista));
+    parametros.append('itens', JSON.stringify(linhas));
 
     Substitua [SEU USUARIO] pelo seu nome e sobrenome juntos em minusculo
     O parâmetro "itens" recebe a lista transformada em JSON pelo método JSON.stringify()

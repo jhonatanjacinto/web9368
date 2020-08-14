@@ -1,7 +1,7 @@
 1) Crie uma constante chamada "moduloTabela" que irá representar todo o módulo que controla a tabela; ela guardará o objeto retornado da IIFE (como referência, veja o exemplo do arquivo "sync.js")
 2) Dentro da IIFE adicione o comando 'use strict'
 3) Crie uma constante chamada "alertTabela" e guarde nela a referência do elemento com id "alertaTabela"
-4) Crie uma constante chamada "tabela" e guarde nela a referência do elemento com id "tabela" (que é o <tbody>)
+4) Crie uma constante chamada "tabela" e guarde nela a referência do elemento com id "tabela" (que é o <table>)
 5) Adicione ao objeto "tabela" um evento "click"
 6) Dentro da função que é executada pelo evento, pegue o alvo do evento e verifique se ele TEM A CLASSE "btn-remover" e se tiver, então pegue o alvo do evento e remova o elemento <TR> ancestral dele
 7) Chame a função "mostrarOuEsconder" que criaremos mais à frente
